@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(JUnitParamsRunner.class)
 @Slf4j
-public class SyncOprimizeTest extends BaseTest {
+public class SyncOptimizeTest extends BaseTest {
 
     @Test
     public void optimizeImageTest() {

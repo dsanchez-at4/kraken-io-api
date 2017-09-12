@@ -20,6 +20,10 @@ public class ResizeItem {
     private int width;
     private int height;
     private int size;
+    private int scale;
+
+    private int x;
+    private int y;
 
     private String background;
 

@@ -232,6 +232,19 @@ public class SyncResizeTest extends BaseTest {
     }
 
     @Test
+    public void cropScaleResizeStrategyTest() {
+        KrakenResponse response = getKrakenApi().post(KrakenSyncRequestImpl.builder()
+                .auth(new Auth(getKrakenConfig().getKey(), getKrakenConfig().getSecret()))
+                .url(getImageOriginalUrl())
+                .lossy(true)
+                .resize(asList(ResizeItem.builder().id("id").height(500).width(300).scale(150).strategy(ResizeStrategy.CROP).build()))
+                .build());
+        log.info("Response: {}" , response);
+        assertTrue(response.isSuccess());
+        assertNotNull(response.getResults());
+    }
+
+    @Test
     public void wrongCropResizeStrategyTest() {
         KrakenResponse response = getKrakenApi().post(KrakenSyncRequestImpl.builder()
                 .auth(new Auth(getKrakenConfig().getKey(), getKrakenConfig().getSecret()))

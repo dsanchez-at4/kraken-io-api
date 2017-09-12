@@ -19,6 +19,7 @@ public class KrakenSyncRequestImpl implements KrakenRequest {
     private Auth auth;
     private boolean wait = true;
     private boolean lossy;
+    private int quality;
     private String url;
     private List<ResizeItem> resize;
     private String imageFinalName;
@@ -30,6 +31,7 @@ public class KrakenSyncRequestImpl implements KrakenRequest {
     public static class Builder {
         private Auth auth;
         private boolean lossy;
+        private int quality;
         private String url;
         private List<ResizeItem> resize;
 
@@ -40,6 +42,11 @@ public class KrakenSyncRequestImpl implements KrakenRequest {
 
         public Builder lossy(boolean lossy) {
             this.lossy = lossy;
+            return this;
+        }
+
+        public Builder quality(int quality) {
+            this.quality = quality;
             return this;
         }
 
@@ -57,6 +64,7 @@ public class KrakenSyncRequestImpl implements KrakenRequest {
             KrakenSyncRequestImpl request = new KrakenSyncRequestImpl();
             request.setAuth(auth);
             request.setLossy(lossy);
+            request.setQuality(quality);
             request.setUrl(url);
             request.setResize(resize);
             return request;
