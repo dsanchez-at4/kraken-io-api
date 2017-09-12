@@ -1,0 +1,8 @@
+{
+  "key": "YOUR_KRAKEN_APP_KEY",
+  "secret": "YOUR_KRAKEN_APP_SECRET",
+
+  "url": "https://api.kraken.io/v1/url",
+  "connectTimeoutMs" : 5000,
+  "readTimeoutMs" : 5000
+}
