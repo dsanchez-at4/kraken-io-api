@@ -1,7 +1,7 @@
 package com.github.joraclista.kraken.api;
 
-import com.github.joraclista.kraken.model.response.KrakenResponse;
 import com.github.joraclista.kraken.model.request.KrakenRequest;
+import com.github.joraclista.kraken.model.response.KrakenResponseImpl;
 
 /**
  * Created by Alisa
@@ -9,6 +9,6 @@ import com.github.joraclista.kraken.model.request.KrakenRequest;
  */
 public interface KrakenApi {
 
-    KrakenResponse post(KrakenRequest request);
+    KrakenResponseImpl post(KrakenRequest request);
 
 }

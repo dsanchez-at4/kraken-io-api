@@ -1,4 +1,4 @@
-package com.github.joraclista.kraken.api;
+package com.github.joraclista.kraken.model.request;
 
 import lombok.Data;
 

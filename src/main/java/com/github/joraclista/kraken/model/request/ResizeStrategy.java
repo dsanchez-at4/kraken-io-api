@@ -1,4 +1,4 @@
-package com.github.joraclista.kraken.api;
+package com.github.joraclista.kraken.model.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * version 1.0.
  */
 public enum ResizeStrategy {
-    FIT, CROP, EXACT, AUTO, PORTRAIT, LANDSCAPE, FILL;
+    FIT, CROP, EXACT, AUTO, PORTRAIT, LANDSCAPE, FILL, SQUARE;
 
     @JsonValue
     public String getValue(){
