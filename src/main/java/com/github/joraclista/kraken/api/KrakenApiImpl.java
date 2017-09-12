@@ -18,7 +18,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.HashMap;
 
-import static com.github.joraclista.kraken.model.response.KrakenResponse.HTTP_200_OK;
+import static org.springframework.http.HttpStatus.OK;
 
 /**
  * Created by Alisa
@@ -52,8 +52,8 @@ public class KrakenApiImpl implements KrakenApi {
                     .withConnectionTimeout(config.getConnectTimeoutMs())
                     .withReadTimeout(config.getReadTimeoutMs())
                     .post(request, clazz);
-            result.setHttpStatusCode(200);
-            result.setHttpStatusText(HTTP_200_OK);
+            result.setHttpStatusCode(OK.value());
+            result.setHttpStatusText(OK.getReasonPhrase());
             result.setImageOriginalUrl(request.getUrl());
             return result;
         } catch (HttpClientErrorException e) {
