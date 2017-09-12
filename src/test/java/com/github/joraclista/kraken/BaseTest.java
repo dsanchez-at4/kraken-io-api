@@ -5,8 +5,8 @@ import com.github.joraclista.kraken.api.KrakenApiImpl;
 import com.github.joraclista.kraken.auth.Auth;
 import com.github.joraclista.kraken.config.KrakenConfig;
 import com.github.joraclista.kraken.helpers.ResourceLoader;
-import com.github.joraclista.kraken.model.request.KrakenRequest;
-import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl;
+import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl.MultipleResizeRequestImpl;
+import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl.SingleResizeRequestImpl;
 import com.github.joraclista.kraken.model.request.ResizeItem;
 import com.github.joraclista.kraken.model.request.ResizeStrategy;
 import lombok.Getter;
@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.github.joraclista.kraken.helpers.Mapper.readValue;
-import static java.util.Arrays.asList;
 
 /**
  * Created by Alisa
@@ -41,31 +40,30 @@ public class BaseTest {
         krakenApi = new KrakenApiImpl(krakenConfig);
     }
 
-    protected KrakenRequest getRequest(String id, int width, int height, ResizeStrategy strategy, String background) {
-        return KrakenSyncRequestImpl.builder()
-                .auth(new Auth(
-                        getKrakenConfig().getKey(),
-                        getKrakenConfig().getSecret()))
+    protected Auth getAuth() {
+        return new Auth(getKrakenConfig().getKey(), getKrakenConfig().getSecret());
+    }
+
+    protected SingleResizeRequestImpl getRequest(int width, int height, ResizeStrategy strategy, String background) {
+        return SingleResizeRequestImpl.builder()
+                .auth(getAuth())
                 .url(getImageOriginalUrl())
-                .lossy(true)
-                .resize(asList(ResizeItem.builder()
-                        .id(id)
+                .lossy(false)
+                .resize(ResizeItem.builder()
                         .width(width)
                         .height(height)
                         .strategy(strategy)
                         .background(background)
-                        .build()))
+                        .build())
                 .build();
     }
 
-    protected KrakenRequest getRequest(List<ResizeItem> resizes) {
-        return KrakenSyncRequestImpl.builder()
-                .auth(new Auth(
-                        getKrakenConfig().getKey(),
-                        getKrakenConfig().getSecret()))
+    protected MultipleResizeRequestImpl getRequest(List<ResizeItem> resizes) {
+        return MultipleResizeRequestImpl.builder()
+                .auth(getAuth())
                 .url(getImageOriginalUrl())
-                .lossy(true)
-                .resize(resizes)
+                .lossy(false)
+                .resizes(resizes)
                 .build();
     }
 }

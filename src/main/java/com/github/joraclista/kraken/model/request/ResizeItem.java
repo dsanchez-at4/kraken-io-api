@@ -16,9 +16,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ResizeItem {
     private String id;
-    private ResizeStrategy strategy = ResizeStrategy.FIT;
+
+    private ResizeStrategy strategy;
+
     private int width;
     private int height;
+
     private int size;
     private int scale;
 

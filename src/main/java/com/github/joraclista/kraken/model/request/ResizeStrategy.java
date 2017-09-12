@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * version 1.0.
  */
 public enum ResizeStrategy {
-    FIT, CROP, EXACT, AUTO, PORTRAIT, LANDSCAPE, FILL, SQUARE;
+    FIT, CROP, EXACT, AUTO, PORTRAIT, LANDSCAPE, FILL, SQUARE, NONE;
 
     @JsonValue
     public String getValue(){
@@ -20,7 +20,7 @@ public enum ResizeStrategy {
         try {
             return ResizeStrategy.valueOf(value.toUpperCase());
         } catch (Exception e) {
-            return PORTRAIT;
+            return NONE;
         }
     }
 }

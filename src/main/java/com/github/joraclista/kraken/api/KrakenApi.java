@@ -1,7 +1,9 @@
 package com.github.joraclista.kraken.api;
 
-import com.github.joraclista.kraken.model.request.KrakenRequest;
-import com.github.joraclista.kraken.model.response.KrakenResponseImpl;
+import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl.MultipleResizeRequestImpl;
+import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl.SingleResizeRequestImpl;
+import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.MultipleResizeResponseImpl;
+import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.SingleResizeResponseImpl;
 
 /**
  * Created by Alisa
@@ -9,6 +11,8 @@ import com.github.joraclista.kraken.model.response.KrakenResponseImpl;
  */
 public interface KrakenApi {
 
-    KrakenResponseImpl post(KrakenRequest request);
+    SingleResizeResponseImpl post(SingleResizeRequestImpl request);
+
+    MultipleResizeResponseImpl post(MultipleResizeRequestImpl request);
 
 }

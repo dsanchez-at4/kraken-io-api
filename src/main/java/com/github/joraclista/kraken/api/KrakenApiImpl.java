@@ -4,14 +4,17 @@ import com.github.joraclista.kraken.config.KrakenConfig;
 import com.github.joraclista.kraken.helpers.Mapper;
 import com.github.joraclista.kraken.http.RestTemplateProxy;
 import com.github.joraclista.kraken.model.request.KrakenRequest;
-import com.github.joraclista.kraken.model.response.KrakenResponseImpl;
+import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl.MultipleResizeRequestImpl;
+import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl.SingleResizeRequestImpl;
+import com.github.joraclista.kraken.model.response.AbstractKrakenResponse;
+import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.MultipleResizeResponseImpl;
+import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.SingleResizeResponseImpl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.HashMap;
 
-import static com.github.joraclista.kraken.model.response.KrakenResponse.HTTP_200;
 import static com.github.joraclista.kraken.model.response.KrakenResponse.HTTP_200_OK;
 
 /**
@@ -24,31 +27,49 @@ public class KrakenApiImpl implements KrakenApi {
 
     private KrakenConfig config;
 
+
     @Override
-    public KrakenResponseImpl post(KrakenRequest krakenRequest) {
+    public SingleResizeResponseImpl post(SingleResizeRequestImpl request) {
+        return post(request, SingleResizeResponseImpl.class);
+    }
+
+    @Override
+    public MultipleResizeResponseImpl post(MultipleResizeRequestImpl request) {
+        return post(request, MultipleResizeResponseImpl.class);
+    }
+
+    public <T extends AbstractKrakenResponse> T post(KrakenRequest request, Class<T> clazz) {
         try {
-            return new RestTemplateProxy()
+            T result = new RestTemplateProxy()
                     .withUrl(config.getUrl())
                     .withConnectionTimeout(config.getConnectTimeoutMs())
                     .withReadTimeout(config.getReadTimeoutMs())
-                    .post(krakenRequest, KrakenResponseImpl.class)
-                    .withImageOriginalUrl(krakenRequest.getUrl())
-                    .withHttpStatusCode(HTTP_200)
-                    .withHttpStatusText(HTTP_200_OK);
+                    .post(request, clazz);
+            result.setHttpStatusCode(200);
+            result.setHttpStatusText(HTTP_200_OK);
+            result.setImageOriginalUrl(request.getUrl());
+            return result;
         } catch (HttpClientErrorException e) {
             log.error("post: couldn't post request due to : ", e);
-            return new KrakenResponseImpl()
-                    .withSuccess(false)
-                    .withHttpStatusCode(e.getStatusCode().value())
-                    .withHttpStatusText(e.getStatusText())
-                    .withMessage(getErrorMessage(e))
-                    .withImageOriginalUrl(krakenRequest.getUrl());
+            return getErrorResult(request.getUrl(), clazz, getErrorMessage(e), e.getStatusCode().value(), e.getStatusText());
         } catch (Exception e) {
            log.error("post: couldn't post request due to : ", e);
-           return new KrakenResponseImpl()
-                   .withSuccess(false)
-                   .withMessage(e.getMessage())
-                   .withImageOriginalUrl(krakenRequest.getUrl());
+            return getErrorResult(request.getUrl(), clazz, e.getMessage(), null, null);
+        }
+    }
+
+    private <T extends AbstractKrakenResponse> T getErrorResult(String url, Class<T> clazz, String errorMessage, Integer statusCode, String statusText) {
+        try {
+            T errorResult = clazz.newInstance();
+            errorResult.setSuccess(false);
+            errorResult.setHttpStatusCode(statusCode);
+            errorResult.setHttpStatusText(statusText);
+            errorResult.setMessage(errorMessage);
+            errorResult.setImageOriginalUrl(url);
+            return errorResult;
+        } catch (Exception e) {
+            log.error("Couldn't get error result due to {}", e.getMessage());
+            throw new KrakenApiException(e.getMessage());
         }
     }
 

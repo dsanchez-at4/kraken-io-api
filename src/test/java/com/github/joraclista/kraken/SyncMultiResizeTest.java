@@ -2,7 +2,7 @@ package com.github.joraclista.kraken;
 
 import com.github.joraclista.kraken.model.request.ResizeItem;
 import com.github.joraclista.kraken.model.request.ResizeStrategy;
-import com.github.joraclista.kraken.model.response.KrakenResponse;
+import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.MultipleResizeResponseImpl;
 import junitparams.JUnitParamsRunner;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
@@ -42,7 +42,7 @@ public class SyncMultiResizeTest extends BaseTest {
 
     @Test
     public void multiResizeOnValidaDataTest() {
-        KrakenResponse response = getKrakenApi().post(getRequest(resizeItemList));
+        MultipleResizeResponseImpl response = getKrakenApi().post(getRequest(resizeItemList));
 
         assertTrue(response.isSuccess());
         assertNotNull(response.getResults());
@@ -58,7 +58,7 @@ public class SyncMultiResizeTest extends BaseTest {
      */
     @Test
     public void multiResizeOnInvalidDataTest() {
-        KrakenResponse response = getKrakenApi().post(getRequest(resizeItemList.stream()
+        MultipleResizeResponseImpl response = getKrakenApi().post(getRequest(resizeItemList.stream()
                 .map(resizeItem -> {
                     resizeItem.setId("id");
                     return resizeItem;

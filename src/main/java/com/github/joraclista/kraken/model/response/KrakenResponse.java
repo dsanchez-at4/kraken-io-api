@@ -1,7 +1,5 @@
 package com.github.joraclista.kraken.model.response;
 
-import java.util.Map;
-
 /**
  * Created by Alisa
  * version 1.0.
@@ -18,12 +16,8 @@ public interface KrakenResponse {
 
     String getImageOriginalUrl();
 
-    String getGeneratedFileName();
-
     boolean isSuccess();
 
     String getMessage();
-
-    Map<String, ResizeResponseItem> getResults();
 
 }

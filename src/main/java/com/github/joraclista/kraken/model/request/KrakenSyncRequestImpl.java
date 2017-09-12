@@ -1,8 +1,10 @@
 package com.github.joraclista.kraken.model.request;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.joraclista.kraken.auth.Auth;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,61 +16,47 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class KrakenSyncRequestImpl implements KrakenRequest {
+public abstract class KrakenSyncRequestImpl implements KrakenRequest {
 
     private Auth auth;
-    private boolean wait = true;
+    private boolean wait;
     private boolean lossy;
     private int quality;
     private String url;
-    private List<ResizeItem> resize;
     private String imageFinalName;
 
-    public static Builder builder() {
-        return new Builder();
+    private KrakenSyncRequestImpl(Auth auth) {
+        this.auth = auth;
     }
 
-    public static class Builder {
-        private Auth auth;
-        private boolean lossy;
-        private int quality;
-        private String url;
-        private List<ResizeItem> resize;
+    @Data
+    public static class SingleResizeRequestImpl extends KrakenSyncRequestImpl {
+        private ResizeItem resize;
 
-        public Builder auth(Auth auth) {
-            this.auth = auth;
-            return this;
-        }
-
-        public Builder lossy(boolean lossy) {
-            this.lossy = lossy;
-            return this;
-        }
-
-        public Builder quality(int quality) {
-            this.quality = quality;
-            return this;
-        }
-
-        public Builder url(String url) {
-            this.url = url;
-            return this;
-        }
-
-        public Builder resize(List<ResizeItem> resize) {
+        @Builder
+        public SingleResizeRequestImpl(Auth auth, boolean lossy, int quality, String url, ResizeItem resize){
+            super(auth);
+            setLossy(lossy);
+            setQuality(quality);
+            setUrl(url);
+            setWait(true);
             this.resize = resize;
-            return this;
-        }
-
-        public KrakenSyncRequestImpl build() {
-            KrakenSyncRequestImpl request = new KrakenSyncRequestImpl();
-            request.setAuth(auth);
-            request.setLossy(lossy);
-            request.setQuality(quality);
-            request.setUrl(url);
-            request.setResize(resize);
-            return request;
         }
     }
 
+    @Data
+    public static class MultipleResizeRequestImpl extends KrakenSyncRequestImpl {
+        @JsonProperty("resize")
+        private List<ResizeItem> resizes;
+
+        @Builder
+        public MultipleResizeRequestImpl(Auth auth, boolean lossy, int quality, String url, List<ResizeItem> resizes){
+            super(auth);
+            setLossy(lossy);
+            setQuality(quality);
+            setUrl(url);
+            setWait(true);
+            this.resizes = resizes;
+        }
+    }
 }
