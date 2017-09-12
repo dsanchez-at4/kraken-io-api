@@ -35,8 +35,18 @@ public abstract class AbstractKrakenResponse implements KrakenResponse {
     }
 
     @Data
-    public static class SingleResizeResponseImpl extends AbstractKrakenResponse {
+    public static class SingleResizeResponseImpl extends OptimizeResponseImpl {
 
+        @JsonProperty("kraked_width")
+        private int krakedWidth;
+
+        @JsonProperty("kraked_height")
+        private int krakedHeight;
+
+    }
+
+    @Data
+    public static class OptimizeResponseImpl extends AbstractKrakenResponse {
         @JsonProperty("file_name")
         private String fileName;
 
@@ -57,13 +67,6 @@ public abstract class AbstractKrakenResponse implements KrakenResponse {
 
         @JsonProperty("original_height")
         private int originalHeight;
-
-        @JsonProperty("kraked_width")
-        private int krakedWidth;
-
-        @JsonProperty("kraked_height")
-        private int krakedHeight;
-
     }
 
 }

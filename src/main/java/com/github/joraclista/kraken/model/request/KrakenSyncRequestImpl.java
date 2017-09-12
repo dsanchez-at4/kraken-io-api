@@ -30,6 +30,19 @@ public abstract class KrakenSyncRequestImpl implements KrakenRequest {
     }
 
     @Data
+    public static class OptimizeRequestImpl extends KrakenSyncRequestImpl {
+
+        @Builder
+        public OptimizeRequestImpl(Auth auth, boolean lossy, int quality, String url){
+            super(auth);
+            setLossy(lossy);
+            setQuality(quality);
+            setUrl(url);
+            setWait(true);
+        }
+    }
+
+    @Data
     public static class SingleResizeRequestImpl extends KrakenSyncRequestImpl {
         private ResizeItem resize;
 

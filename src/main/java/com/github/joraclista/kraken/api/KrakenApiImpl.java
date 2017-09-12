@@ -1,13 +1,16 @@
 package com.github.joraclista.kraken.api;
 
+import com.github.joraclista.kraken.api.exceptions.KrakenApiException;
 import com.github.joraclista.kraken.config.KrakenConfig;
 import com.github.joraclista.kraken.helpers.Mapper;
 import com.github.joraclista.kraken.http.RestTemplateProxy;
 import com.github.joraclista.kraken.model.request.KrakenRequest;
 import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl.MultipleResizeRequestImpl;
+import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl.OptimizeRequestImpl;
 import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl.SingleResizeRequestImpl;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.MultipleResizeResponseImpl;
+import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.OptimizeResponseImpl;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.SingleResizeResponseImpl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +30,10 @@ public class KrakenApiImpl implements KrakenApi {
 
     private KrakenConfig config;
 
+    @Override
+    public OptimizeResponseImpl post(OptimizeRequestImpl request) {
+        return post(request, OptimizeResponseImpl.class);
+    }
 
     @Override
     public SingleResizeResponseImpl post(SingleResizeRequestImpl request) {
@@ -50,10 +57,10 @@ public class KrakenApiImpl implements KrakenApi {
             result.setImageOriginalUrl(request.getUrl());
             return result;
         } catch (HttpClientErrorException e) {
-            log.error("post: couldn't post request due to : ", e);
+            log.error("post: couldn't post request due to : {}", e.getMessage());
             return getErrorResult(request.getUrl(), clazz, getErrorMessage(e), e.getStatusCode().value(), e.getStatusText());
         } catch (Exception e) {
-           log.error("post: couldn't post request due to : ", e);
+           log.error("post: couldn't post request due to : {}", e.getMessage());
             return getErrorResult(request.getUrl(), clazz, e.getMessage(), null, null);
         }
     }
