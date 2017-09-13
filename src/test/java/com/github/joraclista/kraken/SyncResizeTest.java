@@ -88,7 +88,6 @@ public class SyncResizeTest extends BaseTest {
     @Test
     public void wrongResizeStrategyTest() {
         SingleResizeResponseImpl response = getKrakenApi().post(SingleResizeRequestImpl.builder()
-                .auth(getAuth())
                 .url(getImageOriginalUrl())
                 .lossy(true)
                 .resize((ResizeItem.builder().id("id").width(100).height(200).strategy(null).build()))
@@ -102,7 +101,6 @@ public class SyncResizeTest extends BaseTest {
     @Test
     public void wrongPortraitResizeStrategyTest() {
         SingleResizeResponseImpl response = getKrakenApi().post(SingleResizeRequestImpl.builder()
-                .auth(getAuth())
                 .url(getImageOriginalUrl())
                 .lossy(true)
                 .resize((ResizeItem.builder().id("id").strategy(ResizeStrategy.PORTRAIT).build()))
@@ -116,7 +114,6 @@ public class SyncResizeTest extends BaseTest {
     @Test
     public void wrongLandscapeResizeStrategyTest() {
         SingleResizeResponseImpl response = getKrakenApi().post(SingleResizeRequestImpl.builder()
-                .auth(getAuth())
                 .url(getImageOriginalUrl())
                 .lossy(true)
                 .resize(ResizeItem.builder().id("id").strategy(ResizeStrategy.LANDSCAPE).build())
@@ -130,7 +127,6 @@ public class SyncResizeTest extends BaseTest {
     @Test
     public void wrongExactResizeStrategyTest() {
         SingleResizeResponseImpl response = getKrakenApi().post(SingleResizeRequestImpl.builder()
-                .auth(getAuth())
                 .url(getImageOriginalUrl())
                 .lossy(true)
                 .resize(ResizeItem.builder().id("id").strategy(ResizeStrategy.EXACT).build())
@@ -144,7 +140,6 @@ public class SyncResizeTest extends BaseTest {
     @Test
     public void wrongAutoResizeStrategyTest() {
         SingleResizeResponseImpl response = getKrakenApi().post(SingleResizeRequestImpl.builder()
-                .auth(getAuth())
                 .url(getImageOriginalUrl())
                 .lossy(true)
                 .resize(ResizeItem.builder().id("id").strategy(ResizeStrategy.AUTO).build())
@@ -158,7 +153,6 @@ public class SyncResizeTest extends BaseTest {
     @Test
     public void wrongSquareResizeStrategyTest() {
         SingleResizeResponseImpl response = getKrakenApi().post(SingleResizeRequestImpl.builder()
-                .auth(getAuth())
                 .url(getImageOriginalUrl())
                 .lossy(true)
                 .resize(ResizeItem.builder().id("id").strategy(ResizeStrategy.SQUARE).build())
@@ -172,7 +166,6 @@ public class SyncResizeTest extends BaseTest {
     @Test
     public void squareResizeStrategyTest() {
         SingleResizeResponseImpl response = getKrakenApi().post(SingleResizeRequestImpl.builder()
-                .auth(getAuth())
                 .url(getImageOriginalUrl())
                 .lossy(true)
                 .resize(ResizeItem.builder().id("id").size(500).strategy(ResizeStrategy.SQUARE).build())
@@ -185,7 +178,6 @@ public class SyncResizeTest extends BaseTest {
     @Test
     public void fillResizeStrategyTest() {
         SingleResizeResponseImpl response = getKrakenApi().post(SingleResizeRequestImpl.builder()
-                .auth(getAuth())
                 .url(getImageOriginalUrl())
                 .lossy(true)
                 .resize(ResizeItem.builder().id("id").height(500).width(300).background("red").strategy(ResizeStrategy.FILL).build())
@@ -198,7 +190,6 @@ public class SyncResizeTest extends BaseTest {
     @Test
     public void cropResizeStrategyTest() {
         SingleResizeResponseImpl response = getKrakenApi().post(SingleResizeRequestImpl.builder()
-                .auth(getAuth())
                 .url(getImageOriginalUrl())
                 .lossy(true)
                 .resize(ResizeItem.builder().id("id").height(500).width(300).strategy(ResizeStrategy.CROP).build())
@@ -211,7 +202,6 @@ public class SyncResizeTest extends BaseTest {
     @Test
     public void cropScaleResizeStrategyTest() {
         SingleResizeResponseImpl response = getKrakenApi().post(SingleResizeRequestImpl.builder()
-                .auth(getAuth())
                 .url(getImageOriginalUrl())
                 .lossy(true)
                 .resize(ResizeItem.builder().id("id").height(500).width(300).scale(150).strategy(ResizeStrategy.CROP).build())
@@ -224,7 +214,6 @@ public class SyncResizeTest extends BaseTest {
     @Test
     public void wrongCropResizeStrategyTest() {
         SingleResizeResponseImpl response = getKrakenApi().post(SingleResizeRequestImpl.builder()
-                .auth(getAuth())
                 .url(getImageOriginalUrl())
                 .lossy(true)
                 .resize(ResizeItem.builder().id("id").strategy(ResizeStrategy.CROP).build())

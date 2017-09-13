@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -18,7 +19,11 @@ public interface Mapper {
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     static <T> T readValue(InputStream src, Class<T> valueType) throws IOException {
-        return MAPPER.readValue(src,valueType);
+        return MAPPER.readValue(src, valueType);
+    }
+
+    static <T> T readValue(File file, Class<T> valueType) throws IOException {
+        return MAPPER.readValue(file, valueType);
     }
 
     static String writeValueAsString(Object value) throws IOException {

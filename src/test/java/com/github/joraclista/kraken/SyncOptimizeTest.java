@@ -21,7 +21,6 @@ public class SyncOptimizeTest extends BaseTest {
     @Test
     public void optimizeImageTest() {
         OptimizeResponseImpl response = getKrakenApi().post(OptimizeRequestImpl.builder()
-                .auth(getAuth())
                 .url(getImageOriginalUrl())
                 .lossy(true)
                 .build());

@@ -20,7 +20,6 @@ public class SyncLossyOptimizationTest extends BaseTest {
     @Test
     public void invalidQualityLossParameter() {
         SingleResizeResponseImpl response = getKrakenApi().post(KrakenSyncRequestImpl.SingleResizeRequestImpl.builder()
-                .auth(getAuth())
                 .url(getImageOriginalUrl())
                 .lossy(true)
                 .quality(200)
@@ -34,7 +33,6 @@ public class SyncLossyOptimizationTest extends BaseTest {
     @Test
     public void qualityLossParameter() {
         SingleResizeResponseImpl response = getKrakenApi().post(KrakenSyncRequestImpl.SingleResizeRequestImpl.builder()
-                .auth(getAuth())
                 .url(getImageOriginalUrl())
                 .lossy(true)
                 .quality(50)

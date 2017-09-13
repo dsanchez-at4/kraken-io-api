@@ -25,16 +25,12 @@ public abstract class KrakenSyncRequestImpl implements KrakenRequest {
     private String url;
     private String imageFinalName;
 
-    private KrakenSyncRequestImpl(Auth auth) {
-        this.auth = auth;
-    }
 
     @Data
     public static class OptimizeRequestImpl extends KrakenSyncRequestImpl {
 
         @Builder
-        public OptimizeRequestImpl(Auth auth, boolean lossy, int quality, String url){
-            super(auth);
+        public OptimizeRequestImpl(boolean lossy, int quality, String url){
             setLossy(lossy);
             setQuality(quality);
             setUrl(url);
@@ -47,8 +43,7 @@ public abstract class KrakenSyncRequestImpl implements KrakenRequest {
         private ResizeItem resize;
 
         @Builder
-        public SingleResizeRequestImpl(Auth auth, boolean lossy, int quality, String url, ResizeItem resize){
-            super(auth);
+        public SingleResizeRequestImpl(boolean lossy, int quality, String url, ResizeItem resize){
             setLossy(lossy);
             setQuality(quality);
             setUrl(url);
@@ -63,8 +58,7 @@ public abstract class KrakenSyncRequestImpl implements KrakenRequest {
         private List<ResizeItem> resizes;
 
         @Builder
-        public MultipleResizeRequestImpl(Auth auth, boolean lossy, int quality, String url, List<ResizeItem> resizes){
-            super(auth);
+        public MultipleResizeRequestImpl(boolean lossy, int quality, String url, List<ResizeItem> resizes){
             setLossy(lossy);
             setQuality(quality);
             setUrl(url);

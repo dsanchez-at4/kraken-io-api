@@ -10,6 +10,8 @@ public interface KrakenRequest {
 
     Auth getAuth();
 
+    void setAuth(Auth auth);
+
     String getUrl();
 
 }

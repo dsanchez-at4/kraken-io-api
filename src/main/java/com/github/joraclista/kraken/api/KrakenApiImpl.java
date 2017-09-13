@@ -1,6 +1,8 @@
 package com.github.joraclista.kraken.api;
 
 import com.github.joraclista.kraken.api.exceptions.KrakenApiException;
+import com.github.joraclista.kraken.auth.Auth;
+import com.github.joraclista.kraken.config.ConfigLocation;
 import com.github.joraclista.kraken.config.KrakenConfig;
 import com.github.joraclista.kraken.helpers.Mapper;
 import com.github.joraclista.kraken.http.RestTemplateProxy;
@@ -16,8 +18,10 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.io.IOException;
 import java.util.HashMap;
 
+import static com.github.joraclista.kraken.helpers.Mapper.readValue;
 import static org.springframework.http.HttpStatus.OK;
 
 /**
@@ -29,6 +33,10 @@ import static org.springframework.http.HttpStatus.OK;
 public class KrakenApiImpl implements KrakenApi {
 
     private KrakenConfig config;
+
+    public KrakenApiImpl() throws IOException {
+        config = readValue(new ConfigLocation(KrakenApiImpl.class.getClassLoader()).getConfig(), KrakenConfig.class);
+    }
 
     @Override
     public OptimizeResponseImpl post(OptimizeRequestImpl request) {
@@ -47,6 +55,7 @@ public class KrakenApiImpl implements KrakenApi {
 
     public <T extends AbstractKrakenResponse> T post(KrakenRequest request, Class<T> clazz) {
         try {
+            request.setAuth(new Auth(config.getKey(), config.getSecret()));
             T result = new RestTemplateProxy()
                     .withUrl(config.getUrl())
                     .withConnectionTimeout(config.getConnectTimeoutMs())
