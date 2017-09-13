@@ -16,4 +16,5 @@ public interface KrakenResponse {
 
     String getMessage();
 
+    String getId();
 }

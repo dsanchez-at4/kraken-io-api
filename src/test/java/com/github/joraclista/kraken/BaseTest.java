@@ -2,8 +2,8 @@ package com.github.joraclista.kraken;
 
 import com.github.joraclista.kraken.api.KrakenApi;
 import com.github.joraclista.kraken.api.KrakenApiImpl;
-import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl.MultipleResizeRequestImpl;
-import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl.SingleResizeRequestImpl;
+import com.github.joraclista.kraken.model.request.MultipleResizeRequestImpl;
+import com.github.joraclista.kraken.model.request.ResizeRequestImpl;
 import com.github.joraclista.kraken.model.request.ResizeItem;
 import com.github.joraclista.kraken.model.request.ResizeStrategy;
 import lombok.Getter;
@@ -32,8 +32,8 @@ public class BaseTest {
         krakenApi = new KrakenApiImpl();
     }
 
-    protected SingleResizeRequestImpl getRequest(int width, int height, ResizeStrategy strategy, String background) {
-        return SingleResizeRequestImpl.builder()
+    protected ResizeRequestImpl getRequest(int width, int height, ResizeStrategy strategy, String background) {
+        return ResizeRequestImpl.syncBuilder()
                 .url(getImageOriginalUrl())
                 .lossy(false)
                 .resize(ResizeItem.builder()
@@ -46,7 +46,7 @@ public class BaseTest {
     }
 
     protected MultipleResizeRequestImpl getRequest(List<ResizeItem> resizes) {
-        return MultipleResizeRequestImpl.builder()
+        return MultipleResizeRequestImpl.syncBuilder()
                 .url(getImageOriginalUrl())
                 .lossy(false)
                 .resizes(resizes)

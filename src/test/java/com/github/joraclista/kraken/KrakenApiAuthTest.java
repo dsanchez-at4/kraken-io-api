@@ -2,7 +2,7 @@ package com.github.joraclista.kraken;
 
 import com.github.joraclista.kraken.api.KrakenApiImpl;
 import com.github.joraclista.kraken.config.KrakenConfig;
-import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl.SingleResizeRequestImpl;
+import com.github.joraclista.kraken.model.request.ResizeRequestImpl;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.SingleResizeResponseImpl;
 import junitparams.JUnitParamsRunner;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class KrakenApiAuthTest extends BaseTest {
     @Test
     public void wrongAuthData() {
         SingleResizeResponseImpl response = new KrakenApiImpl(new KrakenConfig("any", "any", "https://api.kraken.io/v1/url"))
-                .post(SingleResizeRequestImpl.builder()
+                .post(ResizeRequestImpl.syncBuilder()
                 .url(getImageOriginalUrl())
                 .lossy(true)
                 .build());
@@ -37,7 +37,7 @@ public class KrakenApiAuthTest extends BaseTest {
 
     @Test
     public void correctAuthData() {
-        SingleResizeResponseImpl response = getKrakenApi().post(SingleResizeRequestImpl.builder()
+        SingleResizeResponseImpl response = getKrakenApi().post(ResizeRequestImpl.syncBuilder()
                 .url(getImageOriginalUrl())
                 .lossy(true)
                 .build());

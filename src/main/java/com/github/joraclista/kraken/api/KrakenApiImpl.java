@@ -6,10 +6,10 @@ import com.github.joraclista.kraken.config.ConfigLocation;
 import com.github.joraclista.kraken.config.KrakenConfig;
 import com.github.joraclista.kraken.helpers.Mapper;
 import com.github.joraclista.kraken.http.RestTemplateProxy;
+import com.github.joraclista.kraken.model.request.MultipleResizeRequestImpl;
+import com.github.joraclista.kraken.model.request.OptimizeRequestImpl;
+import com.github.joraclista.kraken.model.request.ResizeRequestImpl;
 import com.github.joraclista.kraken.model.request.KrakenRequest;
-import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl.MultipleResizeRequestImpl;
-import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl.OptimizeRequestImpl;
-import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl.SingleResizeRequestImpl;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.MultipleResizeResponseImpl;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.OptimizeResponseImpl;
@@ -44,7 +44,7 @@ public class KrakenApiImpl implements KrakenApi {
     }
 
     @Override
-    public SingleResizeResponseImpl post(SingleResizeRequestImpl request) {
+    public SingleResizeResponseImpl post(ResizeRequestImpl request) {
         return post(request, SingleResizeResponseImpl.class);
     }
 

@@ -1,8 +1,8 @@
 package com.github.joraclista.kraken.api;
 
-import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl.MultipleResizeRequestImpl;
-import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl.OptimizeRequestImpl;
-import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl.SingleResizeRequestImpl;
+import com.github.joraclista.kraken.model.request.MultipleResizeRequestImpl;
+import com.github.joraclista.kraken.model.request.OptimizeRequestImpl;
+import com.github.joraclista.kraken.model.request.ResizeRequestImpl;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.MultipleResizeResponseImpl;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.OptimizeResponseImpl;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.SingleResizeResponseImpl;
@@ -15,7 +15,7 @@ public interface KrakenApi {
 
     OptimizeResponseImpl post(OptimizeRequestImpl request);
 
-    SingleResizeResponseImpl post(SingleResizeRequestImpl request);
+    SingleResizeResponseImpl post(ResizeRequestImpl request);
 
     MultipleResizeResponseImpl post(MultipleResizeRequestImpl request);
 

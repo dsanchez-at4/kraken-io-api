@@ -1,6 +1,6 @@
 package com.github.joraclista.kraken;
 
-import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl.OptimizeRequestImpl;
+import com.github.joraclista.kraken.model.request.OptimizeRequestImpl;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.OptimizeResponseImpl;
 import junitparams.JUnitParamsRunner;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ public class SyncOptimizeTest extends BaseTest {
 
     @Test
     public void optimizeImageTest() {
-        OptimizeResponseImpl response = getKrakenApi().post(OptimizeRequestImpl.builder()
+        OptimizeResponseImpl response = getKrakenApi().post(OptimizeRequestImpl.syncBuilder()
                 .url(getImageOriginalUrl())
                 .lossy(true)
                 .build());

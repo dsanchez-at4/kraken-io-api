@@ -1,6 +1,6 @@
 package com.github.joraclista.kraken;
 
-import com.github.joraclista.kraken.model.request.KrakenSyncRequestImpl;
+import com.github.joraclista.kraken.model.request.ResizeRequestImpl;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.SingleResizeResponseImpl;
 import junitparams.JUnitParamsRunner;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ public class SyncLossyOptimizationTest extends BaseTest {
 
     @Test
     public void invalidQualityLossParameter() {
-        SingleResizeResponseImpl response = getKrakenApi().post(KrakenSyncRequestImpl.SingleResizeRequestImpl.builder()
+        SingleResizeResponseImpl response = getKrakenApi().post(ResizeRequestImpl.syncBuilder()
                 .url(getImageOriginalUrl())
                 .lossy(true)
                 .quality(200)
@@ -32,7 +32,7 @@ public class SyncLossyOptimizationTest extends BaseTest {
 
     @Test
     public void qualityLossParameter() {
-        SingleResizeResponseImpl response = getKrakenApi().post(KrakenSyncRequestImpl.SingleResizeRequestImpl.builder()
+        SingleResizeResponseImpl response = getKrakenApi().post(ResizeRequestImpl.syncBuilder()
                 .url(getImageOriginalUrl())
                 .lossy(true)
                 .quality(50)

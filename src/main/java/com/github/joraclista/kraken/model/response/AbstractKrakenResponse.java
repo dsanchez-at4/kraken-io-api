@@ -19,6 +19,8 @@ public abstract class AbstractKrakenResponse implements KrakenResponse {
 
     private String message;
 
+    private String id;
+
     private Integer httpStatusCode;
 
     private String httpStatusText;
