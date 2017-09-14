@@ -6,10 +6,10 @@ import com.github.joraclista.kraken.config.ConfigLocation;
 import com.github.joraclista.kraken.config.KrakenConfig;
 import com.github.joraclista.kraken.helpers.Mapper;
 import com.github.joraclista.kraken.http.RestTemplateProxy;
+import com.github.joraclista.kraken.model.request.KrakenRequest;
 import com.github.joraclista.kraken.model.request.MultipleResizeRequestImpl;
 import com.github.joraclista.kraken.model.request.OptimizeRequestImpl;
 import com.github.joraclista.kraken.model.request.ResizeRequestImpl;
-import com.github.joraclista.kraken.model.request.KrakenRequest;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.MultipleResizeResponseImpl;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.OptimizeResponseImpl;
@@ -32,7 +32,7 @@ import static org.springframework.http.HttpStatus.OK;
 @AllArgsConstructor
 public class KrakenApiImpl implements KrakenApi {
 
-    private KrakenConfig config;
+    private final KrakenConfig config;
 
     public KrakenApiImpl() throws IOException {
         config = readValue(new ConfigLocation(KrakenApiImpl.class.getClassLoader()).getConfig(), KrakenConfig.class);
@@ -56,6 +56,7 @@ public class KrakenApiImpl implements KrakenApi {
     public <T extends AbstractKrakenResponse> T post(KrakenRequest request, Class<T> clazz) {
         try {
             request.setAuth(new Auth(config.getKey(), config.getSecret()));
+            request.setDevMode(config.isDevMode());
             T result = new RestTemplateProxy()
                     .withUrl(config.getUrl())
                     .withConnectionTimeout(config.getConnectTimeoutMs())
@@ -97,5 +98,9 @@ public class KrakenApiImpl implements KrakenApi {
             log.warn("Couldn't get error message from http response due to {}", exc.getMessage());
         }
         return errorMessage;
+    }
+
+    public boolean isLiveMode() {
+        return config.isLiveMode();
     }
 }

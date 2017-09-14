@@ -20,6 +20,9 @@ public abstract class AbstractKrakenRequest implements KrakenRequest {
 
     private boolean wait;
 
+    @JsonProperty("dev")
+    private boolean devMode = false;
+
     private boolean lossy;
 
     private int quality;

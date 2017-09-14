@@ -33,7 +33,9 @@ public class SyncResizeTest extends BaseTest {
 
         assertNotNull(response.getKrakedUrl());
 
-        assertEquals(response.getKrakedHeight(), height);
+        if (getKrakenApi().isLiveMode())
+            assertEquals(response.getKrakedHeight(), height);
+
     }
 
     @Parameters({
@@ -47,8 +49,9 @@ public class SyncResizeTest extends BaseTest {
         assertTrue(response.isSuccess());
 
         assertNotNull(response.getKrakedUrl());
-
-        assertEquals(response.getKrakedWidth(), width);
+        if (getKrakenApi().isLiveMode()) {
+            assertEquals(response.getKrakedWidth(), width);
+        }
     }
 
     @Parameters({
@@ -62,9 +65,11 @@ public class SyncResizeTest extends BaseTest {
         assertTrue(response.isSuccess());
 
         assertNotNull(response.getKrakedUrl());
+        if (getKrakenApi().isLiveMode()) {
+            assertEquals(response.getKrakedWidth(), width);
+            assertEquals(response.getKrakedHeight(), height);
+        }
 
-        assertEquals(response.getKrakedWidth(), width);
-        assertEquals(response.getKrakedHeight(), height);
     }
 
     @Parameters({
@@ -79,9 +84,11 @@ public class SyncResizeTest extends BaseTest {
         log.info("Response: {}" , response);
         assertTrue(response.isSuccess());
         assertNotNull(response.getKrakedUrl());
+        if (getKrakenApi().isLiveMode()) {
+            assertEquals(response.getKrakedWidth(), width);
+            assertEquals(response.getKrakedHeight(), height);
+        }
 
-        assertEquals(response.getKrakedWidth(), width);
-        assertEquals(response.getKrakedHeight(), height);
     }
 
 

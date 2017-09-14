@@ -42,6 +42,9 @@ public class SyncMultiResizeTest extends BaseTest {
 
     @Test
     public void multiResizeOnValidaDataTest() {
+        //only works in live mode, as response.result is a Map in live mode and list in sandbox mode
+        if (!getKrakenApi().isLiveMode())
+            return;
         MultipleResizeResponseImpl response = getKrakenApi().post(getRequest(resizeItemList));
 
         assertTrue(response.isSuccess());

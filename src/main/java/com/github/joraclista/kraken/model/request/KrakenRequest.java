@@ -12,6 +12,8 @@ public interface KrakenRequest {
 
     void setAuth(Auth auth);
 
+    void setDevMode(boolean devMode);
+
     String getUrl();
 
 }

@@ -29,7 +29,9 @@ public class AsyncResizeTest extends BaseTest {
                 .build());
         log.info("Response: {}" , response);
         assertTrue(response.isSuccess());
-        assertNotNull(response.getId());
+
+        if (getKrakenApi().isLiveMode())
+            assertNotNull(response.getId());
     }
 
     @Test

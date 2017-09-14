@@ -55,6 +55,7 @@ public class AsyncOptimizeTest extends BaseTest {
 
         log.info("Response: {}" , response);
         assertTrue(response.isSuccess());
-        assertNotNull(response.getId());
+        if (getKrakenApi().isLiveMode())
+            assertNotNull(response.getId());
     }
 }

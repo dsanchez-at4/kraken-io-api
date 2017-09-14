@@ -19,4 +19,6 @@ public interface KrakenApi {
 
     MultipleResizeResponseImpl post(MultipleResizeRequestImpl request);
 
+    boolean isLiveMode();
+
 }
