@@ -5,6 +5,8 @@ import org.apache.http.impl.NoConnectionReuseStrategy;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
@@ -52,5 +54,10 @@ public class RestTemplateProxy {
 
     public <T> T post(Object request, Class<T> clazz) throws Exception {
         return getRestTemplate().postForObject(url, request, clazz);
+    }
+
+    public <T> ResponseEntity<T> exchange(HttpMethod method,
+                                          HttpEntity<?> requestEntity, Class<T> responseType, Object... uriVariables) {
+        return getRestTemplate().exchange(url, method, requestEntity, responseType, uriVariables);
     }
 }

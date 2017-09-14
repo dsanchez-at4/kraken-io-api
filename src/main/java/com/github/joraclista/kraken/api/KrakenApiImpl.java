@@ -1,10 +1,8 @@
 package com.github.joraclista.kraken.api;
 
-import com.github.joraclista.kraken.api.exceptions.KrakenApiException;
 import com.github.joraclista.kraken.auth.Auth;
 import com.github.joraclista.kraken.config.ConfigLocation;
 import com.github.joraclista.kraken.config.KrakenConfig;
-import com.github.joraclista.kraken.helpers.Mapper;
 import com.github.joraclista.kraken.http.RestTemplateProxy;
 import com.github.joraclista.kraken.model.request.KrakenRequest;
 import com.github.joraclista.kraken.model.request.MultipleResizeRequestImpl;
@@ -19,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import static com.github.joraclista.kraken.helpers.Mapper.readValue;
 import static org.springframework.http.HttpStatus.OK;
@@ -30,7 +27,7 @@ import static org.springframework.http.HttpStatus.OK;
  */
 @Slf4j
 @AllArgsConstructor
-public class KrakenApiImpl implements KrakenApi {
+public class KrakenApiImpl extends Base implements KrakenApi {
 
     private final KrakenConfig config;
 
@@ -75,30 +72,6 @@ public class KrakenApiImpl implements KrakenApi {
         }
     }
 
-    private <T extends AbstractKrakenResponse> T getErrorResult(String url, Class<T> clazz, String errorMessage, Integer statusCode, String statusText) {
-        try {
-            T errorResult = clazz.newInstance();
-            errorResult.setSuccess(false);
-            errorResult.setHttpStatusCode(statusCode);
-            errorResult.setHttpStatusText(statusText);
-            errorResult.setMessage(errorMessage);
-            errorResult.setImageOriginalUrl(url);
-            return errorResult;
-        } catch (Exception e) {
-            log.error("Couldn't get error result due to {}", e.getMessage());
-            throw new KrakenApiException(e.getMessage());
-        }
-    }
-
-    private String getErrorMessage(HttpClientErrorException e) {
-        String errorMessage = e.getMessage();
-        try {
-            errorMessage = Mapper.readValue(e.getResponseBodyAsString(), HashMap.class).get("message") + "";
-        } catch (Exception exc) {
-            log.warn("Couldn't get error message from http response due to {}", exc.getMessage());
-        }
-        return errorMessage;
-    }
 
     public boolean isLiveMode() {
         return config.isLiveMode();

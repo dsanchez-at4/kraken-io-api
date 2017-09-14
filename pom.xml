@@ -67,6 +67,11 @@
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.25</version>
         </dependency>
+        <dependency>
+            <groupId>net.sf.jmimemagic</groupId>
+            <artifactId>jmimemagic</artifactId>
+            <version>0.1.4</version>
+        </dependency>
         <!-- Test -->
         <dependency>
             <groupId>junit</groupId>
