@@ -32,6 +32,7 @@ Or you can as well pass all configuration programatically:
 
 Pls mind that client can be set up for either SANDBOX (will work with empty or invalid api key / secret) or LIVE (will only work for correct api key / secret) mode.
 LIVE mode is the default one.
+[More on the sandbox api here](https://kraken.io/docs/sandbox)
 
 ```java
   KrakenApi krakenApi = new KrakenApiImpl(KrakenConfig.builder()
@@ -60,6 +61,7 @@ Sync request will wait until kraken finishes image processing:
 
 ASync request will not wait until kraken finishes image processing, just will return success flag and id of the request.
 Pls mind that valid callback url is necessary for this request
+[More on async mode here](https://kraken.io/docs/wait-callback)
 
 ```java
   OptimizeResponseImpl response = getKrakenApi().post(OptimizeRequestImpl.asyncBuilder()
