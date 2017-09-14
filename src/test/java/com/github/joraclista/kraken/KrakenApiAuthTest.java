@@ -23,11 +23,15 @@ public class KrakenApiAuthTest extends BaseTest {
 
     @Test
     public void wrongAuthData() {
-        SingleResizeResponseImpl response = new KrakenApiImpl(new KrakenConfig("any", "any", "https://api.kraken.io/v1/url"))
+        SingleResizeResponseImpl response = new KrakenApiImpl(KrakenConfig.builder()
+                .key("any")
+                .secret("any")
+                .url("https://api.kraken.io/v1/url")
+                .build())
                 .post(ResizeRequestImpl.syncBuilder()
-                .url(getImageOriginalUrl())
-                .lossy(true)
-                .build());
+                        .url(getImageOriginalUrl())
+                        .lossy(true)
+                        .build());
         assertFalse(response.isSuccess());
         assertNotNull(response.getMessage());
         assertEquals(response.getHttpStatusCode(), Integer.valueOf(UNAUTHORIZED.value()));

@@ -1,9 +1,6 @@
 package com.github.joraclista.kraken.config;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import static com.github.joraclista.kraken.config.Mode.LIVE;
 
@@ -12,9 +9,7 @@ import static com.github.joraclista.kraken.config.Mode.LIVE;
  * version 1.0.
  */
 @Data
-@NoArgsConstructor
-@Builder
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class KrakenConfig {
 
     private String key;
@@ -22,12 +17,16 @@ public class KrakenConfig {
     private String url;
     private int connectTimeoutMs;
     private int readTimeoutMs;
-    private Mode mode = LIVE;
+    private Mode mode;
 
-    public KrakenConfig(String key, String secret, String url) {
+    @Builder
+    public KrakenConfig(String key, String secret, String url, int connectTimeoutMs, int readTimeoutMs, Mode mode) {
         this.key = key;
         this.secret = secret;
         this.url = url;
+        this.connectTimeoutMs = connectTimeoutMs;
+        this.readTimeoutMs = readTimeoutMs;
+        this.mode = mode == null ? LIVE : mode;
     }
 
     public boolean isDevMode() {
