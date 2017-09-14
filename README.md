@@ -32,6 +32,7 @@ Or you can as well pass all configuration programatically:
 
 Pls mind that client can be set up for either SANDBOX (will work with empty or invalid api key / secret) or LIVE (will only work for correct api key / secret) mode.
 LIVE mode is the default one.
+
 [More on the sandbox api here](https://kraken.io/docs/sandbox)
 
 ```java
@@ -61,6 +62,7 @@ Sync request will wait until kraken finishes image processing:
 
 ASync request will not wait until kraken finishes image processing, just will return success flag and id of the request.
 Pls mind that valid callback url is necessary for this request
+
 [More on async mode here](https://kraken.io/docs/wait-callback)
 
 ```java
@@ -70,6 +72,50 @@ Pls mind that valid callback url is necessary for this request
                 .callbackUrl("http://call.back.com/url")
                 .build());
                 
-  log.info("Response: id = {}" , response.isSuccess());
-  log.info("Response: kraked url = {}" , response.getId());
+  log.info("Response: success = {}" , response.isSuccess());
+  log.info("Response: request id = {}" , response.getId());
+```
+
+Image Resizing
+
+
+Resize image via specified strategy.
+use syncBuilder for sync request, asyncBuilder with callback url for waiting request.
+
+[More on resizing here](https://kraken.io/docs/image-resizing)
+
+
+```java
+SingleResizeResponseImpl response = getKrakenApi().post(ResizeRequestImpl.syncBuilder()
+                .url(getImageOriginalUrl())
+                .lossy(true)
+                .resize((ResizeItem.builder().id("id").width(100).height(200).strategy(ResizeStrategy.PORTRAIT).build()))
+                .build());
+
+log.info("Response: id = {}" , response.isSuccess());
+log.info("Response: kraked url = {}" , response.getKrakedUrl());
+```
+
+Resize image to multiple set of sizes / strategies.
+
+use syncBuilder for sync request, asyncBuilder with callback url for waiting request.
+Mind that "NONE" strategy will  lead to just optimizing without resizing.
+
+[More on multi-resizing here](https://kraken.io/docs/generating-image-sets)
+
+```java
+MultipleResizeResponseImpl response = getKrakenApi().post(MultipleResizeRequestImpl.syncBuilder()
+                .url(getImageOriginalUrl())
+                .resizes(Arrays.asList(
+                        ResizeItem.builder().id("id1").width(100).height(100).strategy(ResizeStrategy.PORTRAIT).build(),
+                        ResizeItem.builder().id("id2").width(300).height(300).strategy(ResizeStrategy.CROP).build(),
+                        ResizeItem.builder().id("id3").width(400).height(400).strategy(ResizeStrategy.FILL).background("red").build(),
+                        ResizeItem.builder().id("id4").width(100).height(100).strategy(ResizeStrategy.LANDSCAPE).build(),
+                        ResizeItem.builder().id("id5").width(1000).height(1000).strategy(ResizeStrategy.EXACT).build(),
+                        ResizeItem.builder().id("id6").strategy(ResizeStrategy.NONE).build(),
+                        ResizeItem.builder().id("id7").width(100).height(100).strategy(ResizeStrategy.AUTO).build()))
+                .build());
+
+log.info("Response: id = {}" , response.isSuccess());
+log.info("Response: results = {}" , response.getResults());
 ```
