@@ -71,4 +71,23 @@ public abstract class AbstractKrakenResponse implements KrakenResponse {
         private int originalHeight;
     }
 
+    @Data
+    public static class UserStatusResponseImpl extends AbstractKrakenResponse {
+
+        @JsonProperty("plan_name")
+        private String planName;
+
+        @JsonProperty("quota_total")
+        private long quotaTotal;
+
+        @JsonProperty("quota_used")
+        private long quotaUsed;
+
+        @JsonProperty("quota_remaining")
+        private long quotaRemaining;
+
+        @JsonProperty("original_width")
+        private boolean active;
+    }
+
 }

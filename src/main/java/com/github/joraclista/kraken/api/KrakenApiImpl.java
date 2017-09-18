@@ -12,6 +12,7 @@ import com.github.joraclista.kraken.model.response.AbstractKrakenResponse;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.MultipleResizeResponseImpl;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.OptimizeResponseImpl;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.SingleResizeResponseImpl;
+import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.UserStatusResponseImpl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.HttpClientErrorException;
@@ -50,25 +51,34 @@ public class KrakenApiImpl extends Base implements KrakenApi {
         return post(request, MultipleResizeResponseImpl.class);
     }
 
-    public <T extends AbstractKrakenResponse> T post(KrakenRequest request, Class<T> clazz) {
+    @Override
+    public UserStatusResponseImpl getStatus() {
+        return post(OptimizeRequestImpl.syncBuilder().build(), config.getUserStatusUrl(), UserStatusResponseImpl.class);
+    }
+
+    private <T extends AbstractKrakenResponse> T post(KrakenRequest request, Class<T> responseClazz) {
+        return post(request, config.getUrl(), responseClazz);
+    }
+
+    private <T extends AbstractKrakenResponse> T post(KrakenRequest request, String url, Class<T> responseClazz) {
         try {
             request.setAuth(new Auth(config.getKey(), config.getSecret()));
             request.setDevMode(config.isDevMode());
             T result = new RestTemplateProxy()
-                    .withUrl(config.getUrl())
+                    .withUrl(url)
                     .withConnectionTimeout(config.getConnectTimeoutMs())
                     .withReadTimeout(config.getReadTimeoutMs())
-                    .post(request, clazz);
+                    .post(request, responseClazz);
             result.setHttpStatusCode(OK.value());
             result.setHttpStatusText(OK.getReasonPhrase());
             result.setImageOriginalUrl(request.getUrl());
             return result;
         } catch (HttpClientErrorException e) {
             log.error("post: couldn't post request due to : {}", e.getMessage());
-            return getErrorResult(request.getUrl(), clazz, getErrorMessage(e), e.getStatusCode().value(), e.getStatusText());
+            return getErrorResult(request.getUrl(), responseClazz, getErrorMessage(e), e.getStatusCode().value(), e.getStatusText());
         } catch (Exception e) {
            log.error("post: couldn't post request due to : {}", e.getMessage());
-            return getErrorResult(request.getUrl(), clazz, e.getMessage(), null, null);
+            return getErrorResult(request.getUrl(), responseClazz, e.getMessage(), null, null);
         }
     }
 

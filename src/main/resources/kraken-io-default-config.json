@@ -3,6 +3,8 @@
   "secret": "YOUR_KRAKEN_APP_SECRET",
 
   "url": "https://api.kraken.io/v1/url",
+  "userStatusUrl": "https://api.kraken.io/user_status",
+  "directUploadUrl": "https://api.kraken.io/v1/upload",
   "connectTimeoutMs" : 5000,
   "readTimeoutMs" : 5000,
   "mode" : "sandbox"

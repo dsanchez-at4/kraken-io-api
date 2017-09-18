@@ -70,7 +70,7 @@ public class KrakenDirectUploadApiImpl extends Base implements KrakenDirectUploa
 
             request.setAuth(new Auth(config.getKey(), config.getSecret()));
             ResponseEntity<T> response = new RestTemplateProxy()
-                    .withUrl("https://api.kraken.io/v1/upload")
+                    .withUrl(config.getDirectUploadUrl())
                     .withConnectionTimeout(config.getConnectTimeoutMs())
                     .withReadTimeout(config.getReadTimeoutMs()).exchange(POST, new HttpEntity<>(requestParts, headers), responseClass);
             T result = response.getBody();

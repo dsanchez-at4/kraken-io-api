@@ -6,6 +6,7 @@ import com.github.joraclista.kraken.model.request.ResizeRequestImpl;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.MultipleResizeResponseImpl;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.OptimizeResponseImpl;
 import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.SingleResizeResponseImpl;
+import com.github.joraclista.kraken.model.response.AbstractKrakenResponse.UserStatusResponseImpl;
 
 /**
  * Created by Alisa
@@ -18,6 +19,8 @@ public interface KrakenApi {
     SingleResizeResponseImpl post(ResizeRequestImpl request);
 
     MultipleResizeResponseImpl post(MultipleResizeRequestImpl request);
+
+    UserStatusResponseImpl getStatus();
 
     boolean isLiveMode();
 

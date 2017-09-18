@@ -15,6 +15,8 @@ public class KrakenConfig {
     private String key;
     private String secret;
     private String url;
+    private String userStatusUrl;
+    private String directUploadUrl;
     private int connectTimeoutMs;
     private int readTimeoutMs;
     private Mode mode;
