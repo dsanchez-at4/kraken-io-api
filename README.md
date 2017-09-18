@@ -119,3 +119,21 @@ MultipleResizeResponseImpl response = getKrakenApi().post(MultipleResizeRequestI
 log.info("Response: id = {}" , response.isSuccess());
 log.info("Response: results = {}" , response.getResults());
 ```
+
+Get user status.
+
+Get the plan info, quota info (remaining, used, total)
+
+[More on user status here](https://kraken.io/docs/user-status)
+
+```java
+ UserStatusResponseImpl status = new KrakenApiImpl(KrakenConfig.builder()
+                .key("YOUR_APP_KEY")
+                .secret("YOUR_APP_SECRET")
+                .build())
+                .getStatus();
+
+log.info("Response: success = {}" , status.isSuccess());
+log.info("Response: quotaUsed = {}" , status.getQuotaUsed());
+log.info("Response: planName = {}" , status.getPlanName());
+```
