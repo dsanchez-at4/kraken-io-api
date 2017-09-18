@@ -26,7 +26,6 @@ public class KrakenApiAuthTest extends BaseTest {
         SingleResizeResponseImpl response = new KrakenApiImpl(KrakenConfig.builder()
                 .key("any")
                 .secret("any")
-                .url("https://api.kraken.io/v1/url")
                 .build())
                 .post(ResizeRequestImpl.syncBuilder()
                         .url(getImageOriginalUrl())

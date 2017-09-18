@@ -11,6 +11,9 @@ import static com.github.joraclista.kraken.config.Mode.LIVE;
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class KrakenConfig {
+    private static final String DEFAULT_USER_STATUS_URL = "https://api.kraken.io/user_status";
+    private static final String DEFAULT_DIRECT_UPLOAD_URL = "https://api.kraken.io/v1/upload";
+    private static final String DEFAULT_URL = "https://api.kraken.io/v1/url";
 
     private String key;
     private String secret;
@@ -22,10 +25,12 @@ public class KrakenConfig {
     private Mode mode;
 
     @Builder
-    public KrakenConfig(String key, String secret, String url, int connectTimeoutMs, int readTimeoutMs, Mode mode) {
+    public KrakenConfig(String key, String secret, String url, String userStatusUrl, String directUploadUrl, int connectTimeoutMs, int readTimeoutMs, Mode mode) {
         this.key = key;
         this.secret = secret;
-        this.url = url;
+        this.url = url == null ? DEFAULT_URL : url;
+        this.userStatusUrl = userStatusUrl == null ? DEFAULT_USER_STATUS_URL : userStatusUrl;
+        this.directUploadUrl = directUploadUrl == null ? DEFAULT_DIRECT_UPLOAD_URL : directUploadUrl;
         this.connectTimeoutMs = connectTimeoutMs;
         this.readTimeoutMs = readTimeoutMs;
         this.mode = mode == null ? LIVE : mode;
