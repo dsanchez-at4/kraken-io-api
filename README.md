@@ -46,7 +46,8 @@ LIVE mode is the default one.
 
 ### Usage
 
-Sync request will wait until kraken finishes image processing:
+#### Sync request will wait until kraken finishes image processing:
+
 
 ```java
   OptimizeResponseImpl response = krakenApi.post(OptimizeRequestImpl.syncBuilder()
@@ -60,7 +61,9 @@ Sync request will wait until kraken finishes image processing:
   log.info("Response: kraked size = {}" , response.getKrakedSize());
 ```
 
-ASync request will not wait until kraken finishes image processing, just will return success flag and id of the request.
+#### ASync request will retern immediately
+
+Asyn request will not wait until kraken finishes image processing, just will return success flag and id of the request.
 Pls mind that valid callback url is necessary for this request
 
 [More on async mode here](https://kraken.io/docs/wait-callback)
@@ -76,7 +79,7 @@ Pls mind that valid callback url is necessary for this request
   log.info("Response: request id = {}" , response.getId());
 ```
 
-Image Resizing
+#### Image Resizing
 
 
 Resize image via specified strategy.
@@ -96,7 +99,7 @@ log.info("Response: id = {}" , response.isSuccess());
 log.info("Response: kraked url = {}" , response.getKrakedUrl());
 ```
 
-Resize image to multiple set of sizes / strategies.
+#### Resize image to multiple set of sizes / strategies.
 
 use syncBuilder for sync request, asyncBuilder with callback url for waiting request.
 Mind that "NONE" strategy will  lead to just optimizing without resizing.
@@ -120,7 +123,7 @@ log.info("Response: id = {}" , response.isSuccess());
 log.info("Response: results = {}" , response.getResults());
 ```
 
-Get user status.
+#### Get user status.
 
 Get the plan info, quota info (remaining, used, total)
 
@@ -137,3 +140,7 @@ log.info("Response: success = {}" , status.isSuccess());
 log.info("Response: quotaUsed = {}" , status.getQuotaUsed());
 log.info("Response: planName = {}" , status.getPlanName());
 ```
+
+#### Direct file upload
+
+Pls refer to this example [repo](https://github.com/joraclista/kraken-io-api-example/blob/master/README.md)
