@@ -74,7 +74,7 @@ public class KrakenDirectUploadApiImpl extends Base implements KrakenDirectUploa
                     .withConnectionTimeout(config.getConnectTimeoutMs())
                     .withReadTimeout(config.getReadTimeoutMs()).exchange(POST, new HttpEntity<>(requestParts, headers), responseClass);
             T result = response.getBody();
-            result.setHttpStatusCode(response.getStatusCodeValue());
+            result.setHttpStatusCode(response.getStatusCode().value());
             result.setHttpStatusText(response.getStatusCode().getReasonPhrase());
             return result;
         } catch (HttpClientErrorException e) {

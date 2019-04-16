@@ -11,7 +11,7 @@ import static org.springframework.util.ClassUtils.getDefaultClassLoader;
  */
 public interface ResourceLoader {
 
-    static InputStream load(String resourceName){
+     static InputStream load(String resourceName){
         return load(resourceName, getDefaultClassLoader());
     }
 
